@@ -10,8 +10,6 @@ NRFX_C_SRCS += $(NRFX_ROOT)/mdk/system_nrf9160.c
 
 EXTERNALDIRS += $(NRFX_ROOT)/mdk/
 
-#NRFJPROG_OPTIONS=-f NRF53 --coprocessor CP_APPLICATION 
-
 CFLAGS += -DCPU_CONF_PATH=\"nrf9160-conf.h\"
 
 CFLAGS += -mfloat-abi=hard 
