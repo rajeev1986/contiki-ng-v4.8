@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2020 Yago Fontoura do Rosario <yago.rosario@hotmail.com.br>
- * Copyright (C) 2022 Rajeev Piyare <rajeev@conexiotech.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -33,21 +32,21 @@
  * \addtogroup nrf-platforms
  * @{
  *
- * \addtogroup nrf9160
+ * \addtogroup nrf5340-dk
  * @{
  *
  * \file
- *         nrf9160 specific configuration.
+ *         nRF5340 DK specific configuration.
  * \author
- *         Rajeev Piyare <rajeev@conexiotech.com>
+ *         Yago Fontoura do Rosario <yago.rosario@hotmail.com.br>
  */
 /*---------------------------------------------------------------------------*/
-#ifndef NRF91_PDK_CONF_H
-#define NRF91_PDK_CONF_H
+#ifndef NRF53_PDK_CONF_H
+#define NRF53_PDK_CONF_H
 /*---------------------------------------------------------------------------*/
 #define PLATFORM_HAS_UARTE              1
-#define PLATFORM_HAS_BUTTON             0
-#define PLATFORM_SUPPORTS_BUTTON_HAL    0
+#define PLATFORM_HAS_BUTTON             1
+#define PLATFORM_SUPPORTS_BUTTON_HAL    1
 /*---------------------------------------------------------------------------*/
 #define NRF_BUTTON1_PIN     23
 #define NRF_BUTTON1_PORT    0
@@ -74,7 +73,7 @@
 #define NRF_UARTE0_RX_PIN   22
 #define NRF_UARTE0_RX_PORT  0
 /*---------------------------------------------------------------------------*/
-#endif /* NRF91_PDK_CONF_H */
+#endif /* NRF53_PDK_CONF_H */
 /*---------------------------------------------------------------------------*/
 /** 
  * @} 

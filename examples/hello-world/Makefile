@@ -1,8 +1,10 @@
 # TARGET ?= simplelink
 # BOARD ?= launchpad/cc1312r1
 
-# TARGET ?= nrf
-# BOARD ?= nrf9160
+PLATFORMS_ONLY += nrf
+TARGET ?= nrf
+# BOARDS_ONLY = nrf5340/dk/application
+BOARDS_ONLY = nrf9160/dk
 
 CONTIKI_PROJECT = hello-world
 all: $(CONTIKI_PROJECT)
