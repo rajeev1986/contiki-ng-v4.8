@@ -3,10 +3,15 @@ ifndef CONTIKI
 endif
 
 ### Board and BSP selection
-#BOARD ?= nrf5340/dk/application
+ifeq ($(BOARD), nrf5340/dk/application)
+  BOARD ?= nrf5340/dk/application
+endif
 
-BOARD ?= nrf9160/dk
-BOARDS = nrf5340/dk/application nrf5340/dk/network nrf52840/dk nrf52840/dongle nrf9160/dk
+ifeq ($(BOARD), nrf9160)
+  BOARD ?= nrf9160
+endif
+
+BOARDS = nrf5340/dk/application nrf5340/dk/network nrf52840/dk nrf52840/dongle nrf9160
 
 ### Unless the example dictates otherwise, build with code size optimisations switched off
 SMALL ?= 0
