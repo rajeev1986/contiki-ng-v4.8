@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Yago Fontoura do Rosario <yago.rosario@hotmail.com.br>
+ * Copyright (C) 2022 Rajeev Piyare <rajeev@conexiotech.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -32,19 +32,17 @@
  * \addtogroup nrf-platforms
  * @{
  *
- * \addtogroup nrf5340-dk
+ * \addtogroup nrf9160-dk
  * @{
  *
  * \file
- *         nRF5340 DK specific sensors driver implementation.
+ *         nRF9160 DK specific sensors driver implementation.
  * \author
- *         Yago Fontoura do Rosario <yago.rosario@hotmail.com.br>
+ *         Rajeev Piyare <rajeev@conexiotech.com>
  */
 /*---------------------------------------------------------------------------*/
 #include "contiki.h"
-
 #include "temp-arch.h"
-
 #include "lib/sensors.h"
 /*---------------------------------------------------------------------------*/
 SENSORS(&temperature_sensor);

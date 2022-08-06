@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Yago Fontoura do Rosario <yago.rosario@hotmail.com.br>
+ * Copyright (C) 2022 Rajeev Piyare <rajeev@conexiotech.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -32,18 +32,25 @@
  * \addtogroup nrf-platforms
  * @{
  *
- * \addtogroup nrf5340-dk
+ * \addtogroup nrf9160-dk
  * @{
  *
  * \file
- *         nRF5340 DK specific buttons driver implementation.
+ *         nRF9160 DK specific buttons driver implementation.
  * \author
- *         Yago Fontoura do Rosario <yago.rosario@hotmail.com.br>
+ *         Rajeev Piyare <rajeev@conexiotech.com>
  */
 /*---------------------------------------------------------------------------*/
 #include "contiki.h"
 #include "dev/button-hal.h"
 /*---------------------------------------------------------------------------*/
+/*
+ * Unlike most DK boards, nRF9160 DK does not actually have 4 buttons.
+ * Instead, it has 2 buttons and 2 switches.
+ * Treat the switches as buttons anyway, for convenience.
+ * This makes life easier for software that wants to deal with
+ * the usual "4 buttons per DK board" convention.
+ */
 BUTTON_HAL_BUTTON(btn_1, "Button 1", NRF_BUTTON1_PORT, NRF_BUTTON1_PIN, \
                   GPIO_HAL_PIN_CFG_PULL_UP, BUTTON_HAL_ID_BUTTON_ZERO, true);
 BUTTON_HAL_BUTTON(btn_2, "Button 2", NRF_BUTTON2_PORT, NRF_BUTTON2_PIN, \
