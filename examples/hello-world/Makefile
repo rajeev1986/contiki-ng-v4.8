@@ -2,8 +2,11 @@
 PLATFORMS_ONLY += nrf
 
 TARGET ?= nrf
-BOARD ?=nrf9160/dk
 
+BOARD ?=conexio-stratus
+
+
+# BOARD ?=nrf9160/dk
 # BOARD ?=nrf5340/dk/application
 
 CONTIKI_PROJECT = hello-world
