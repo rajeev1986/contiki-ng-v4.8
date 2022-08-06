@@ -2,7 +2,7 @@
 PLATFORMS_ONLY += nrf
 
 TARGET ?= nrf
-BOARD ?=nrf9160
+BOARD ?=nrf9160/dk
 
 # BOARD ?=nrf5340/dk/application
 
@@ -11,3 +11,4 @@ all: $(CONTIKI_PROJECT)
 
 CONTIKI = ../..
 include $(CONTIKI)/Makefile.include
+
