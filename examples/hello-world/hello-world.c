@@ -62,12 +62,12 @@ PROCESS_THREAD(hello_world_process, ev, data)
     PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&timer));
     etimer_reset(&timer);
 
-// #if PLATFORM_HAS_LEDS
-  leds_on(LEDS_CONF_BLUE);
-  etimer_set(&timer, CLOCK_SECOND);
-  PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&timer));
-  leds_off(LEDS_CONF_BLUE);
-// #endif
+#if PLATFORM_HAS_LEDS
+    leds_on(LEDS_CONF_BLUE);
+    etimer_set(&timer, CLOCK_SECOND);
+    PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&timer));
+    leds_off(LEDS_CONF_BLUE);
+#endif
 
   }
 
