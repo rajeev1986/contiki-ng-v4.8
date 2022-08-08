@@ -38,6 +38,8 @@
  */
 
 #include "contiki.h"
+#include <sys/clock.h>
+#include "sys/etimer.h"
 #include "dev/leds.h"
 #include <stdio.h> /* For printf() */
 /*---------------------------------------------------------------------------*/
