@@ -38,7 +38,7 @@
  */
 
 #include "contiki.h"
-
+#include "dev/leds.h"
 #include <stdio.h> /* For printf() */
 /*---------------------------------------------------------------------------*/
 PROCESS(hello_world_process, "Hello world process");
@@ -59,6 +59,14 @@ PROCESS_THREAD(hello_world_process, ev, data)
     /* Wait for the periodic timer to expire and then restart the timer. */
     PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&timer));
     etimer_reset(&timer);
+
+// #if PLATFORM_HAS_LEDS
+  leds_on(LEDS_CONF_BLUE);
+  etimer_set(&timer, CLOCK_SECOND);
+  PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&timer));
+  leds_off(LEDS_CONF_BLUE);
+// #endif
+
   }
 
   PROCESS_END();
