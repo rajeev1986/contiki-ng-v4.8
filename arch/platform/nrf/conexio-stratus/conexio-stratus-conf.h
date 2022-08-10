@@ -48,16 +48,16 @@
 #define PLATFORM_HAS_BUTTON             1
 #define PLATFORM_SUPPORTS_BUTTON_HAL    1
 /*---------------------------------------------------------------------------*/
-#define NRF_BUTTON1_PIN     12
-#define NRF_BUTTON1_PORT    0
+#define STRATUS_BUTTON1_PIN     12
+#define STRATUS_BUTTON1_PORT    0
 /*---------------------------------------------------------------------------*/
 /* BLUE LED on the main DK */
-#define NRF_LED1_PIN        3
-#define NRF_LED1_PORT       0
+#define STRATUS_LED1_PIN        3
+#define STRATUS_LED1_PORT       0
 
 /* Orange LED on the Stratus shield */
-#define NRF_LED2_PIN        28
-#define NRF_LED2_PORT       0
+#define STRATUS_LED2_PIN        28
+#define STRATUS_LED2_PORT       0
 /*---------------------------------------------------------------------------*/
 /**
  * \name LED configurations for the dev/leds.h API.
@@ -67,9 +67,6 @@
  */
 #define PLATFORM_HAS_LEDS   1
 #define LEDS_CONF_COUNT     2
-#define LEDS_CONF_BLUE      0
-#define LEDS_CONF_ORANGE    1
-#define LEDS_CONF_ALL       ((1 << LEDS_CONF_COUNT) - 1)
 /*---------------------------------------------------------------------------*/
 #define NRF_UARTE0_TX_PIN   6
 #define NRF_UARTE0_TX_PORT  0

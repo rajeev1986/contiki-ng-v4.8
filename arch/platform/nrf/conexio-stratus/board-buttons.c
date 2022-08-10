@@ -44,7 +44,7 @@
 #include "contiki.h"
 #include "dev/button-hal.h"
 /*---------------------------------------------------------------------------*/
-BUTTON_HAL_BUTTON(btn_1, "Button 1", NRF_BUTTON1_PORT, NRF_BUTTON1_PIN, \
+BUTTON_HAL_BUTTON(btn_1, "Button 1", STRATUS_BUTTON1_PORT, STRATUS_BUTTON1_PIN, \
                   GPIO_HAL_PIN_CFG_PULL_UP, BUTTON_HAL_ID_BUTTON_ZERO, true);
 /*---------------------------------------------------------------------------*/
 BUTTON_HAL_BUTTONS(&btn_1);

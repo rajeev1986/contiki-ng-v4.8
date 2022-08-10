@@ -46,13 +46,13 @@
 /*---------------------------------------------------------------------------*/
 const leds_t leds_arch_leds[] = {
   {
-    .port = NRF_LED1_PORT,
-    .pin = NRF_LED1_PIN,
+    .port = STRATUS_LED1_PORT,
+    .pin = STRATUS_LED1_PIN,
     .negative_logic = true
   },
   {
-    .port = NRF_LED2_PORT,
-    .pin = NRF_LED2_PIN,
+    .port = STRATUS_LED2_PORT,
+    .pin = STRATUS_LED2_PIN,
     .negative_logic = true
   },
 };
