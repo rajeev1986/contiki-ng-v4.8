@@ -32,10 +32,10 @@
 
 /**
  * \file
- *         A very simple Contiki application showing how to use printf() and blink 
- * 		   LEDs on the Conexio Stratus dev kit.
+ *         	A very simple Contiki application showing how to use printf() 
+ * 			and blink LEDs on the Conexio Stratus dev kit.
  * \author
- *         Rajeev Piyare <rajeev@conexiotech.com>
+ *         	Rajeev Piyare <rajeev@conexiotech.com>
  */
 
 #include "contiki.h"
