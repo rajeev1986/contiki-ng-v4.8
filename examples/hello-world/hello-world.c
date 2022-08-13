@@ -52,22 +52,24 @@ PROCESS_THREAD(hello_world_process, ev, data)
 
   PROCESS_BEGIN();
 
-  /* Setup a periodic timer that expires after 10 seconds. */
-  etimer_set(&timer, CLOCK_SECOND * 10);
-
   while(1) {
     printf("Hello, world\n");
 
+    /* Setup a periodic timer that expires after 10 seconds. */
+    etimer_set(&timer, CLOCK_SECOND * 3);
+
     /* Wait for the periodic timer to expire and then restart the timer. */
     PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&timer));
-    etimer_reset(&timer);
 
-#if PLATFORM_HAS_LEDS
-    leds_on(LEDS_CONF_BLUE);
+    leds_on(LEDS_BLUE);
     etimer_set(&timer, CLOCK_SECOND);
     PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&timer));
-    leds_off(LEDS_CONF_BLUE);
-#endif
+    leds_off(LEDS_BLUE);
+
+    leds_on(LEDS_ORANGE);
+    etimer_set(&timer, CLOCK_SECOND);
+    PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&timer));
+    leds_off(LEDS_ORANGE);
 
   }
 

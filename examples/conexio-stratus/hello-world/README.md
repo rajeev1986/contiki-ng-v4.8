@@ -1,21 +1,14 @@
 # hello-world
 
-A minimal Contiki-NG example, simple printing out "Hello, world".
-This example runs a full IPv6 stack with 6LoWPAN and RPL.
-It is possible, for example to ping such a node:
+A minimal Contiki-NG example, simple printing out "Hello, world" and blinking LEDs on Stratus dev kit.
+
+To build the application:
 
 ```
-make TARGET=native && sudo ./hello-world.native
+make clean && make
 ```
+To flash the application to the Stratus device:
 
-Look for the node's global IPv6, e.g.:
 ```
-[INFO: Native    ] Added global IPv6 address fd00::302:304:506:708
-```
-
-And ping it (over the tun interface):
-```
-$ ping6 fd00::302:304:506:708
-PING fd00::302:304:506:708(fd00::302:304:506:708) 56 data bytes
-64 bytes from fd00::302:304:506:708: icmp_seq=1 ttl=64 time=0.289 ms
+make hello-world.upload
 ```

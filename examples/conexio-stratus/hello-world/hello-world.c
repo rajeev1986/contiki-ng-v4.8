@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2006, Swedish Institute of Computer Science.
+ * Copyright (C) 2022 Rajeev Piyare <rajeev@conexiotech.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -32,9 +32,10 @@
 
 /**
  * \file
- *         A very simple Contiki application showing how Contiki programs look
+ *         A very simple Contiki application showing how to use printf() and blink 
+ * 		   LEDs on the Conexio Stratus dev kit.
  * \author
- *         Adam Dunkels <adam@sics.se>
+ *         Rajeev Piyare <rajeev@conexiotech.com>
  */
 
 #include "contiki.h"
@@ -42,6 +43,9 @@
 #include "sys/etimer.h"
 #include "dev/leds.h"
 #include <stdio.h> /* For printf() */
+/*---------------------------------------------------------------------------*/
+/* 1 if STRATUS_SHIELD_CONNECTED else 0 */
+#define STRATUS_SHIELD_CONNECTED    0
 /*---------------------------------------------------------------------------*/
 PROCESS(hello_world_process, "Hello world process");
 AUTOSTART_PROCESSES(&hello_world_process);
@@ -55,14 +59,32 @@ PROCESS_THREAD(hello_world_process, ev, data)
   while(1) {
     printf("Hello from Conexio Stratus\n");
 
-	leds_on(STRATUS_LED1_PIN);
+    /* Setup a periodic timer that expires after 2 seconds. */
+    etimer_set(&timer, CLOCK_SECOND * 2);
 
-	/* Setup a periodic timer that expires after 2 seconds. */
-	etimer_set(&timer, CLOCK_SECOND * 2);
-    /* Wait for the periodic timer to expire and then restart the timer. */
+    /* Wait for the periodic timer to expire. */
     PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&timer));
-	
-	leds_off(STRATUS_LED1_PIN);
+    
+	/* Turn ON BLUE LED on Stratus DK. */
+    leds_on(LEDS_BLUE);
+
+#if STRATUS_SHIELD_CONNECTED
+	/* Turn ON Orange LED on Stratus Shield. */
+    leds_on(LEDS_ORANGE);
+#endif
+    
+	/* Setup a periodic timer that expires after a second. */
+    etimer_set(&timer, CLOCK_SECOND);
+	/* Wait for the periodic timer to expire. */
+    PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&timer));
+    
+	/* Turn OFF BLUE LED on Stratus DK. */
+    leds_off(LEDS_BLUE);
+
+#if STRATUS_SHIELD_CONNECTED
+	/* Turn OFF Orange LED on Stratus Shield. */
+    leds_off(LEDS_ORANGE);
+#endif
   }
 
   PROCESS_END();

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Rajeev Piyare <rajeev@conexiotech.com>
+ * Copyright (C) 2022 Rajeev Piyare <rajeev@conexiotech.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -67,6 +67,9 @@
  */
 #define PLATFORM_HAS_LEDS   1
 #define LEDS_CONF_COUNT     2
+#define LEDS_CONF_BLUE      1
+#define LEDS_CONF_ORANGE    2
+#define LEDS_CONF_ALL       ((1 << LEDS_CONF_COUNT) - 1)
 /*---------------------------------------------------------------------------*/
 #define NRF_UARTE0_TX_PIN   6
 #define NRF_UARTE0_TX_PORT  0
