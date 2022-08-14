@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Yago Fontoura do Rosario <yago.rosario@hotmail.com.br>
+ * Copyright (C)2022 Rajeev Piyare <rajeev@conexiotech.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,13 +35,13 @@
  * \addtogroup nrf-dev Device drivers
  * @{
  *
- * \addtogroup nrf-uarte UARTE driver
+ * \addtogroup nrf-twim I2C driver
  * @{
  *
  * \file
- *         UARTE header file for the nRF.
+ *         I2C header file for the nRF.
  * \author
- *         Yago Fontoura do Rosario <yago.rosario@hotmail.com.br>
+ *         Rajeev Piyare <rajeev@conexiotech.com>
  *
  */
 /*---------------------------------------------------------------------------*/
@@ -51,13 +51,13 @@
 #include "contiki.h"
 /*---------------------------------------------------------------------------*/
 /**
- * @brief Initializa the I2C driver
+ * @brief Initialize the I2C driver
  * 
  */
 void i2c_init(void);
 /*---------------------------------------------------------------------------*/
 /**
- * @brief Writes to the UARTE driver
+ * @brief Writes to the I2C driver
  * 
  * @param data character to be transfered
  * 
@@ -66,7 +66,7 @@ void i2c_init(void);
 void i2c_write(uint8_t address,uint8_t reg_address,uint8_t *data,uint8_t len);
 /*---------------------------------------------------------------------------*/
 /**
- * @brief Sets the input handler called in the event handler
+ * @brief Reads to the I2C driver
  * 
  * @param input character that has been read
  */
