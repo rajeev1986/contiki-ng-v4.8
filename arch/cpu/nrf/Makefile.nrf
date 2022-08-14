@@ -19,6 +19,7 @@ CONTIKI_CPU_SOURCEFILES += temp-arch.c
 CONTIKI_CPU_SOURCEFILES += linkaddr-arch.c
 CONTIKI_CPU_SOURCEFILES += reset-arch.c
 CONTIKI_CPU_SOURCEFILES += slip-arch.c
+CONTIKI_CPU_SOURCEFILES += i2c-arch.c
 
 # Overrides
 CONTIKI_CPU_SOURCEFILES += random.c
@@ -39,6 +40,7 @@ CFLAGS += -DNRFX_GPIOTE_ENABLED
 CFLAGS += -DNRFX_ATOMIC_USE_BUILT_IN
 CFLAGS += -DNRFX_UARTE_ENABLED
 CFLAGS += -DNRFX_UARTE0_ENABLED
+CFLAGS += -DNRFX_TWIM0_ENABLED
 
 LDFLAGS += --specs=nano.specs
 LDFLAGS += -lgcc -lc -lnosys
@@ -55,6 +57,7 @@ NRFX_C_SRCS += $(NRFX_ROOT)/drivers/src/nrfx_rtc.c
 NRFX_C_SRCS += $(NRFX_ROOT)/drivers/src/nrfx_gpiote.c
 NRFX_C_SRCS += $(NRFX_ROOT)/drivers/src/nrfx_power.c
 NRFX_C_SRCS += $(NRFX_ROOT)/drivers/src/nrfx_uarte.c
+NRFX_C_SRCS += $(NRFX_ROOT)/drivers/src/nrfx_twim.c
 
 NRFX_C_SRCS += $(NRFX_ROOT)/soc/nrfx_atomic.c
 
