@@ -54,6 +54,9 @@
 
 #include "lpm.h"
 
+#if PLATFORM_HAS_I2C
+#include "i2c-arch.h"
+#endif
 /*---------------------------------------------------------------------------*/
 /* Log configuration */
 #include "sys/log.h"
@@ -82,6 +85,10 @@ platform_init_stage_two(void)
   uarte_set_input(serial_line_input_byte);
 #endif /* BUILD_WITH_SHELL */
 #endif /* PLATFORM_HAS_UARTE */
+
+#if PLATFORM_HAS_I2C
+  i2c_init();
+#endif
   populate_link_address();
 
   reset_debug();

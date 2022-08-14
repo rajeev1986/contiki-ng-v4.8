@@ -76,7 +76,7 @@
 #define NRF_UARTE0_TX_PORT  0
 #define NRF_UARTE0_RX_PIN   5
 #define NRF_UARTE0_RX_PORT  0
-
+/*---------------------------------------------------------------------------*/
 #define NRF_I2C0_SDA_PIN    26
 #define NRF_I2C0_SDA_PORT   0
 #define NRF_I2C0_SCL_PIN    27

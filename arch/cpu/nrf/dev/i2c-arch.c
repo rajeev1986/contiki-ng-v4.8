@@ -54,6 +54,7 @@
 #include "hal/nrf_gpio.h"
 
 #include <stdint.h>
+#include <stdbool.h>
 #include <string.h>
 #include <stdio.h>
 /*---------------------------------------------------------------------------*/
@@ -73,7 +74,7 @@ volatile nrfx_twim_xfer_desc_t i2c_tx_desc;
 volatile bool nrf_i2c_transfer_done = false;
 volatile bool nrf_i2c_transfer_err = false;
 /*---------------------------------------------------------------------------*/
-static void 
+void 
 i2c_event_handler(nrfx_twim_evt_t const * p_event, void * p_context)
 {
 	switch(p_event->type)
@@ -118,23 +119,6 @@ i2c_wait(void)
 	nrf_i2c_transfer_done = false;
 }
 /*---------------------------------------------------------------------------*/
-void i2c_init(void)
-{
-	nrfx_err_t error;
-
-	nrf_gpio_cfg(i2c_config.sda, NRF_GPIO_PIN_DIR_OUTPUT, NRF_GPIO_PIN_INPUT_CONNECT,
-		             NRF_GPIO_PIN_PULLUP,NRF_GPIO_PIN_H0D1, NRF_GPIO_PIN_NOSENSE);
-
-	nrf_gpio_cfg(i2c_config.scl, NRF_GPIO_PIN_DIR_OUTPUT, NRF_GPIO_PIN_INPUT_CONNECT,
-					 NRF_GPIO_PIN_PULLUP,NRF_GPIO_PIN_H0D1, NRF_GPIO_PIN_NOSENSE);
-
-	error = nrfx_twim_init(&i2c_instance, &i2c_config, i2c_event_handler, NULL);
-	if (error == NRFX_SUCCESS)
-	{
-		nrfx_twim_enable(&i2c_instance);
-	}
-}
-/*---------------------------------------------------------------------------*/
 void 
 i2c_write(uint8_t address,uint8_t reg_address,uint8_t *data,uint8_t len)
 {
@@ -149,7 +133,7 @@ i2c_write(uint8_t address,uint8_t reg_address,uint8_t *data,uint8_t len)
 	// {printf("NRF FAILIURE TX: %ld \n", error);}
 	i2c_wait();
 }
-
+/*---------------------------------------------------------------------------*/
 void 
 i2c_read(uint8_t address,uint8_t reg_address,uint8_t *data,uint8_t len)
 {
@@ -158,6 +142,24 @@ i2c_read(uint8_t address,uint8_t reg_address,uint8_t *data,uint8_t len)
 	if (error != NRFX_SUCCESS)
 	// {printf("NRF FAILIURE TX: %ld \n", error);}
 	i2c_wait();
+}
+/*---------------------------------------------------------------------------*/
+void 
+i2c_init(void)
+{
+	nrfx_err_t error;
+
+	nrf_gpio_cfg(i2c_config.sda, NRF_GPIO_PIN_DIR_OUTPUT, NRF_GPIO_PIN_INPUT_CONNECT,
+					NRF_GPIO_PIN_PULLUP,NRF_GPIO_PIN_H0D1, NRF_GPIO_PIN_NOSENSE);
+
+	nrf_gpio_cfg(i2c_config.scl, NRF_GPIO_PIN_DIR_OUTPUT, NRF_GPIO_PIN_INPUT_CONNECT,
+					NRF_GPIO_PIN_PULLUP,NRF_GPIO_PIN_H0D1, NRF_GPIO_PIN_NOSENSE);
+
+	error = nrfx_twim_init(&i2c_instance, &i2c_config, i2c_event_handler, NULL);
+	if (error == NRFX_SUCCESS)
+	{
+		// nrfx_twim_enable(&i2c_instance);
+	}
 }
 /*---------------------------------------------------------------------------*/
 #endif /* PLATFORM_HAS_I2C */
