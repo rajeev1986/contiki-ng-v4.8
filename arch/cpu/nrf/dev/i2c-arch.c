@@ -64,11 +64,11 @@
 static nrfx_twim_t i2c_instance = NRFX_TWIM_INSTANCE(0);
 const nrfx_twim_config_t i2c_config =
 {
-		.scl 				=	NRF_I2C0_SCL,
-		.sda				=	NRF_I2C0_SDA,
-		.frequency			=	NRF_TWIM_FREQ_100K,
-		.interrupt_priority	=	NRFX_TWIM_DEFAULT_CONFIG_IRQ_PRIORITY,
-		.hold_bus_uninit	=	false
+	.scl 				=	NRF_I2C0_SCL,
+	.sda				=	NRF_I2C0_SDA,
+	.frequency			=	NRF_TWIM_FREQ_100K,
+	.interrupt_priority	=	NRFX_TWIM_DEFAULT_CONFIG_IRQ_PRIORITY,
+	.hold_bus_uninit	=	false
 };
 volatile nrfx_twim_xfer_desc_t i2c_tx_desc;
 volatile bool nrf_i2c_transfer_done = false;
@@ -122,25 +122,32 @@ i2c_wait(void)
 void 
 i2c_write(uint8_t address,uint8_t reg_address,uint8_t *data,uint8_t len)
 {
+	nrfx_err_t err_code;
 	uint8_t buffer[len + 1];
 
 	buffer[0] = reg_address;
 	memcpy(&buffer[1], data, len);
 
 	nrfx_twim_xfer_desc_t write_desc = NRFX_TWIM_XFER_DESC_TX(address,buffer,len+1);
-	nrfx_err_t error = nrfx_twim_xfer(&i2c_instance, &write_desc, 0);
-	if (error != NRFX_SUCCESS)
-	// {printf("NRF FAILIURE TX: %ld \n", error);}
+	err_code = nrfx_twim_xfer(&i2c_instance, &write_desc, 0);
+
+	if(err_code != NRFX_SUCCESS) {
+		return;
+	}
 	i2c_wait();
 }
 /*---------------------------------------------------------------------------*/
 void 
 i2c_read(uint8_t address,uint8_t reg_address,uint8_t *data,uint8_t len)
 {
+	nrfx_err_t err_code;
+
 	nrfx_twim_xfer_desc_t read_desc = NRFX_TWIM_XFER_DESC_TXRX(address,&reg_address,1,data,len);
-	nrfx_err_t error = nrfx_twim_xfer(&i2c_instance, &read_desc, 0);
-	if (error != NRFX_SUCCESS)
-	// {printf("NRF FAILIURE TX: %ld \n", error);}
+	err_code = nrfx_twim_xfer(&i2c_instance, &read_desc, 0);
+
+	if(err_code != NRFX_SUCCESS) {
+		return;
+	}
 	i2c_wait();
 }
 /*---------------------------------------------------------------------------*/
@@ -156,6 +163,7 @@ i2c_init(void)
 					NRF_GPIO_PIN_PULLUP,NRF_GPIO_PIN_H0D1, NRF_GPIO_PIN_NOSENSE);
 
 	err_code = 1;
+	// err_code = nrfx_twim_init(&i2c_instance, &i2c_config, i2c_event_handler, NULL);
 
 	if (err_code == NRFX_SUCCESS)
 	{
