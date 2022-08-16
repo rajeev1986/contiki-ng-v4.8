@@ -147,7 +147,7 @@ i2c_read(uint8_t address,uint8_t reg_address,uint8_t *data,uint8_t len)
 void 
 i2c_init(void)
 {
-	nrfx_err_t error;
+	nrfx_err_t err_code;
 
 	nrf_gpio_cfg(i2c_config.sda, NRF_GPIO_PIN_DIR_OUTPUT, NRF_GPIO_PIN_INPUT_CONNECT,
 					NRF_GPIO_PIN_PULLUP,NRF_GPIO_PIN_H0D1, NRF_GPIO_PIN_NOSENSE);
@@ -155,10 +155,12 @@ i2c_init(void)
 	nrf_gpio_cfg(i2c_config.scl, NRF_GPIO_PIN_DIR_OUTPUT, NRF_GPIO_PIN_INPUT_CONNECT,
 					NRF_GPIO_PIN_PULLUP,NRF_GPIO_PIN_H0D1, NRF_GPIO_PIN_NOSENSE);
 
-	error = nrfx_twim_init(&i2c_instance, &i2c_config, i2c_event_handler, NULL);
-	if (error == NRFX_SUCCESS)
+	err_code = 1;
+
+	if (err_code == NRFX_SUCCESS)
 	{
-		// nrfx_twim_enable(&i2c_instance);
+		nrfx_twim_init(&i2c_instance, &i2c_config, i2c_event_handler, NULL);
+		nrfx_twim_enable(&i2c_instance);
 	}
 }
 /*---------------------------------------------------------------------------*/
