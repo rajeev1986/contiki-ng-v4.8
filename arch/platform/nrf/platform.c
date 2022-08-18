@@ -86,9 +86,9 @@ platform_init_stage_two(void)
 #endif /* BUILD_WITH_SHELL */
 #endif /* PLATFORM_HAS_UARTE */
 
-#if PLATFORM_HAS_I2C
+// #if PLATFORM_HAS_I2C
   i2c_init();
-#endif
+// #endif
   populate_link_address();
 
   reset_debug();

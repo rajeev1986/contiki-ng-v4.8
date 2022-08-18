@@ -44,6 +44,12 @@
  *         Rajeev Piyare <rajeev@conexiotech.com>
  *
  */
+
+/* 
+ * Note: You can't use two components at the same time that share the same 
+ * base address (UART and UARTE do, as well as TWI0, UARTE0 and SPI0 and some others as well). 
+ * That should be explicitly outlined somewhere.
+ */
 /*---------------------------------------------------------------------------*/
 #include "contiki.h"
 /*---------------------------------------------------------------------------*/
@@ -61,7 +67,7 @@
 #define NRF_I2C0_SDA NRF_GPIO_PIN_MAP(NRF_I2C0_SDA_PORT, NRF_I2C0_SDA_PIN)
 #define NRF_I2C0_SCL NRF_GPIO_PIN_MAP(NRF_I2C0_SCL_PORT, NRF_I2C0_SCL_PIN)
 /*---------------------------------------------------------------------------*/
-static nrfx_twim_t i2c_instance = NRFX_TWIM_INSTANCE(0);
+static nrfx_twim_t i2c_instance = NRFX_TWIM_INSTANCE(1);
 const nrfx_twim_config_t i2c_config =
 {
 	.scl 				=	NRF_I2C0_SCL,
@@ -162,12 +168,10 @@ i2c_init(void)
 	nrf_gpio_cfg(i2c_config.scl, NRF_GPIO_PIN_DIR_OUTPUT, NRF_GPIO_PIN_INPUT_CONNECT,
 					NRF_GPIO_PIN_PULLUP,NRF_GPIO_PIN_H0D1, NRF_GPIO_PIN_NOSENSE);
 
-	err_code = 1;
-	// err_code = nrfx_twim_init(&i2c_instance, &i2c_config, i2c_event_handler, NULL);
+	err_code = nrfx_twim_init(&i2c_instance, &i2c_config, i2c_event_handler, NULL);
 
 	if (err_code == NRFX_SUCCESS)
 	{
-		nrfx_twim_init(&i2c_instance, &i2c_config, i2c_event_handler, NULL);
 		nrfx_twim_enable(&i2c_instance);
 	}
 }

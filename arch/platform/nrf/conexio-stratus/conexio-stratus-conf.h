@@ -44,7 +44,7 @@
 #ifndef CONEXIO_STRATUS_PDK_CONF_H
 #define CONEXIO_STRATUS_PDK_CONF_H
 /*---------------------------------------------------------------------------*/
-#define PLATFORM_HAS_UARTE              1
+#define PLATFORM_HAS_UARTE              0
 #define PLATFORM_HAS_BUTTON             1
 #define PLATFORM_SUPPORTS_BUTTON_HAL    1
 #define PLATFORM_HAS_I2C                1
