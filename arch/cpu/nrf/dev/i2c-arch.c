@@ -35,7 +35,7 @@
  * \addtogroup nrf-dev Device drivers
  * @{
  *
- * \addtogroup nrf-twim I2C driver
+ * \addtogroup nrf-twim (two-wire interface master with EasyDMA) I2C driver
  * @{
  *
  * \file
@@ -66,18 +66,11 @@
 #define NRF_I2C1_SCL NRF_GPIO_PIN_MAP(NRF_I2C1_SCL_PORT, NRF_I2C1_SCL_PIN)
 /*---------------------------------------------------------------------------*/
 static nrfx_twim_t i2c_instance = NRFX_TWIM_INSTANCE(1);
+static nrfx_twim_config_t i2c_config =  NRFX_TWIM_DEFAULT_CONFIG(NRF_I2C1_SCL, NRF_I2C1_SDA);
+/*---------------------------------------------------------------------------*/
 volatile nrfx_twim_xfer_desc_t i2c_tx_desc;
 volatile bool nrf_i2c_transfer_done = false;
 volatile bool nrf_i2c_transfer_err = false;
-/*---------------------------------------------------------------------------*/
-const nrfx_twim_config_t i2c_config =
-{
-	.scl 				=	NRF_I2C1_SCL,
-	.sda				=	NRF_I2C1_SDA,
-	.frequency			=	NRF_TWIM_FREQ_100K,
-	.interrupt_priority	=	NRFX_TWIM_DEFAULT_CONFIG_IRQ_PRIORITY,
-	.hold_bus_uninit	=	false
-};
 /*---------------------------------------------------------------------------*/
 void 
 i2c_event_handler(nrfx_twim_evt_t const * p_event, void * p_context)
@@ -153,13 +146,7 @@ void
 i2c_init(void)
 {
 	nrfx_err_t err_code;
-
-	nrf_gpio_cfg(i2c_config.sda, NRF_GPIO_PIN_DIR_OUTPUT, NRF_GPIO_PIN_INPUT_CONNECT,
-					NRF_GPIO_PIN_PULLUP,NRF_GPIO_PIN_H0D1, NRF_GPIO_PIN_NOSENSE);
-
-	nrf_gpio_cfg(i2c_config.scl, NRF_GPIO_PIN_DIR_OUTPUT, NRF_GPIO_PIN_INPUT_CONNECT,
-					NRF_GPIO_PIN_PULLUP,NRF_GPIO_PIN_H0D1, NRF_GPIO_PIN_NOSENSE);
-
+    
 	err_code = nrfx_twim_init(&i2c_instance, &i2c_config, i2c_event_handler, NULL);
 
 	if(err_code != NRFX_SUCCESS) {
