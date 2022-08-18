@@ -42,7 +42,11 @@
 #include <sys/clock.h>
 #include "sys/etimer.h"
 #include "dev/leds.h"
+#include "sys/log.h"
 #include <stdio.h> /* For printf() */
+/*---------------------------------------------------------------------------*/
+#define LOG_MODULE "Stratus"
+#define LOG_LEVEL LOG_LEVEL_DBG
 /*---------------------------------------------------------------------------*/
 /* 1 if STRATUS_SHIELD_CONNECTED else 0 */
 #define STRATUS_SHIELD_CONNECTED    0
@@ -57,7 +61,7 @@ PROCESS_THREAD(hello_world_process, ev, data)
   PROCESS_BEGIN();
 
   while(1) {
-    printf("Hello from Conexio Stratus\n");
+    LOG_INFO("Hello from Conexio Stratus\n");
 
     /* Setup a periodic timer that expires after 2 seconds. */
     etimer_set(&timer, CLOCK_SECOND * 2);
