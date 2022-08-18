@@ -51,26 +51,31 @@
 #include "contiki.h"
 /*---------------------------------------------------------------------------*/
 /**
- * @brief Initialize the I2C driver
- * 
+ * \brief One-time initialisation of the nRF I2C Driver
+ *
+ * This function must be called before any other I2C driver calls.
  */
 void i2c_init(void);
 /*---------------------------------------------------------------------------*/
 /**
- * @brief Writes to the I2C driver
- * 
- * @param data character to be transfered
- * 
- * @pre @ref uarte_init must have been called
+ * \brief             Perform a write-only I2C transaction.
+ * \param  slave_addr The address of the slave device on the I2C bus
+ * \param  wdata      Write data during the I2C transaction.
+ * \param  wlen       Length of data to be written
+ * \retval true       The I2C operation was successful
+ * \retval false      The I2C operation failed
  */
-void i2c_write(uint8_t address,uint8_t reg_address,uint8_t *data,uint8_t len);
+void i2c_write(uint8_t slave_addr, uint8_t reg_addr, uint8_t *wdata, uint8_t wlen);
 /*---------------------------------------------------------------------------*/
 /**
- * @brief Reads to the I2C driver
- * 
- * @param input character that has been read
+ * \brief             Perform a read-only I2C transaction.
+ * \param  slave_addr The address of the slave device on the I2C bus
+ * \param  rdata      Read data during the I2C transaction.
+ * \param  rlen       Length of data to be read
+ * \retval true       The I2C operation was successful
+ * \retval false      The I2C operation failed
  */
-void i2c_read(uint8_t address,uint8_t reg_address,uint8_t *data,uint8_t len);
+void i2c_read(uint8_t slave_addr, uint8_t reg_add, uint8_t *rdata, uint8_t rlen);
 /*---------------------------------------------------------------------------*/
 #endif /* I2C_ARCH_H */
 /*---------------------------------------------------------------------------*/

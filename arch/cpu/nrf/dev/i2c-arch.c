@@ -72,11 +72,10 @@ volatile nrfx_twim_xfer_desc_t i2c_tx_desc;
 volatile bool nrf_i2c_transfer_done = false;
 volatile bool nrf_i2c_transfer_err = false;
 /*---------------------------------------------------------------------------*/
-void 
-i2c_event_handler(nrfx_twim_evt_t const * p_event, void * p_context)
+static void 
+i2c_event_handler(nrfx_twim_evt_t const *p_event, void *p_context)
 {
-	switch(p_event->type)
-		{
+	switch(p_event->type) {
 		case NRFX_TWIM_EVT_DONE: 
 			nrf_i2c_transfer_done = true;
 			break;
@@ -94,7 +93,7 @@ i2c_event_handler(nrfx_twim_evt_t const * p_event, void * p_context)
 			break;
 		default:
 			break;
-		}
+	}
 }
 /*---------------------------------------------------------------------------*/
 static void 
@@ -111,15 +110,15 @@ i2c_wait(void)
 }
 /*---------------------------------------------------------------------------*/
 void 
-i2c_write(uint8_t address,uint8_t reg_address,uint8_t *data,uint8_t len)
+i2c_write(uint8_t slave_addr, uint8_t reg_addr,uint8_t *wdata, uint8_t wlen)
 {
 	nrfx_err_t err_code;
-	uint8_t buffer[len + 1];
+	uint8_t buffer[wlen + 1];
 
-	buffer[0] = reg_address;
-	memcpy(&buffer[1], data, len);
+	buffer[0] = reg_addr;
+	memcpy(&buffer[1], wdata, wlen);
 
-	nrfx_twim_xfer_desc_t write_desc = NRFX_TWIM_XFER_DESC_TX(address,buffer,len+1);
+	nrfx_twim_xfer_desc_t write_desc = NRFX_TWIM_XFER_DESC_TX(slave_addr, buffer, wlen + 1);
 	err_code = nrfx_twim_xfer(&i2c_instance, &write_desc, 0);
 
 	if(err_code != NRFX_SUCCESS) {
@@ -129,11 +128,11 @@ i2c_write(uint8_t address,uint8_t reg_address,uint8_t *data,uint8_t len)
 }
 /*---------------------------------------------------------------------------*/
 void 
-i2c_read(uint8_t address,uint8_t reg_address,uint8_t *data,uint8_t len)
+i2c_read(uint8_t slave_addr, uint8_t reg_addr, uint8_t *rdata, uint8_t rlen)
 {
 	nrfx_err_t err_code;
 
-	nrfx_twim_xfer_desc_t read_desc = NRFX_TWIM_XFER_DESC_TXRX(address,&reg_address,1,data,len);
+	nrfx_twim_xfer_desc_t read_desc = NRFX_TWIM_XFER_DESC_TXRX(slave_addr, &reg_addr, 1, rdata, rlen);
 	err_code = nrfx_twim_xfer(&i2c_instance, &read_desc, 0);
 
 	if(err_code != NRFX_SUCCESS) {
