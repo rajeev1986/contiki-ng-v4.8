@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2020 Yago Fontoura do Rosario <yago.rosario@hotmail.com.br>
+ * Copyright (C) 2022 Rajeev Piyare <rajeev@conexiotech.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,6 +37,7 @@
  *      Platform implementation for nRF
  * \author
  *      Yago Fontoura do Rosario <yago.rosario@hotmail.com.br>
+ *      Rajeev Piyare <rajeev@conexiotech.com>
  */
 /*---------------------------------------------------------------------------*/
 #include "contiki.h"
@@ -49,14 +51,11 @@
 #include "int-master.h"
 #include "sensors.h"
 #include "uarte-arch.h"
+#include "i2c-arch.h"
 #include "linkaddr-arch.h"
 #include "reset-arch.h"
 
 #include "lpm.h"
-
-#if PLATFORM_HAS_I2C
-#include "i2c-arch.h"
-#endif
 /*---------------------------------------------------------------------------*/
 /* Log configuration */
 #include "sys/log.h"
@@ -86,9 +85,10 @@ platform_init_stage_two(void)
 #endif /* BUILD_WITH_SHELL */
 #endif /* PLATFORM_HAS_UARTE */
 
-// #if PLATFORM_HAS_I2C
+#if PLATFORM_HAS_I2C
   i2c_init();
-// #endif
+#endif
+
   populate_link_address();
 
   reset_debug();

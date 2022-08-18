@@ -44,7 +44,7 @@
 #ifndef CONEXIO_STRATUS_PDK_CONF_H
 #define CONEXIO_STRATUS_PDK_CONF_H
 /*---------------------------------------------------------------------------*/
-#define PLATFORM_HAS_UARTE              0
+#define PLATFORM_HAS_UARTE              1
 #define PLATFORM_HAS_BUTTON             1
 #define PLATFORM_SUPPORTS_BUTTON_HAL    1
 #define PLATFORM_HAS_I2C                1
@@ -77,10 +77,10 @@
 #define NRF_UARTE0_RX_PIN   5
 #define NRF_UARTE0_RX_PORT  0
 /*---------------------------------------------------------------------------*/
-#define NRF_I2C0_SDA_PIN    26
-#define NRF_I2C0_SDA_PORT   0
-#define NRF_I2C0_SCL_PIN    27
-#define NRF_I2C0_SCL_PORT   0
+#define NRF_I2C1_SDA_PIN    26
+#define NRF_I2C1_SDA_PORT   0
+#define NRF_I2C1_SCL_PIN    27
+#define NRF_I2C1_SCL_PORT   0
 /*---------------------------------------------------------------------------*/
 #endif /* CONEXIO_STRATUS_PDK_CONF_H */
 /*---------------------------------------------------------------------------*/

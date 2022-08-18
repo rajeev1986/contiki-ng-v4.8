@@ -59,26 +59,25 @@
 #include "nrfx_twim.h"
 #include "hal/nrf_gpio.h"
 
-#include <stdint.h>
 #include <stdbool.h>
-#include <string.h>
-#include <stdio.h>
+#include <string.h> /* For memcpy() */
 /*---------------------------------------------------------------------------*/
-#define NRF_I2C0_SDA NRF_GPIO_PIN_MAP(NRF_I2C0_SDA_PORT, NRF_I2C0_SDA_PIN)
-#define NRF_I2C0_SCL NRF_GPIO_PIN_MAP(NRF_I2C0_SCL_PORT, NRF_I2C0_SCL_PIN)
+#define NRF_I2C1_SDA NRF_GPIO_PIN_MAP(NRF_I2C1_SDA_PORT, NRF_I2C1_SDA_PIN)
+#define NRF_I2C1_SCL NRF_GPIO_PIN_MAP(NRF_I2C1_SCL_PORT, NRF_I2C1_SCL_PIN)
 /*---------------------------------------------------------------------------*/
 static nrfx_twim_t i2c_instance = NRFX_TWIM_INSTANCE(1);
+volatile nrfx_twim_xfer_desc_t i2c_tx_desc;
+volatile bool nrf_i2c_transfer_done = false;
+volatile bool nrf_i2c_transfer_err = false;
+/*---------------------------------------------------------------------------*/
 const nrfx_twim_config_t i2c_config =
 {
-	.scl 				=	NRF_I2C0_SCL,
-	.sda				=	NRF_I2C0_SDA,
+	.scl 				=	NRF_I2C1_SCL,
+	.sda				=	NRF_I2C1_SDA,
 	.frequency			=	NRF_TWIM_FREQ_100K,
 	.interrupt_priority	=	NRFX_TWIM_DEFAULT_CONFIG_IRQ_PRIORITY,
 	.hold_bus_uninit	=	false
 };
-volatile nrfx_twim_xfer_desc_t i2c_tx_desc;
-volatile bool nrf_i2c_transfer_done = false;
-volatile bool nrf_i2c_transfer_err = false;
 /*---------------------------------------------------------------------------*/
 void 
 i2c_event_handler(nrfx_twim_evt_t const * p_event, void * p_context)
@@ -87,26 +86,20 @@ i2c_event_handler(nrfx_twim_evt_t const * p_event, void * p_context)
 		{
 		case NRFX_TWIM_EVT_DONE: 
 			nrf_i2c_transfer_done = true;
-			//printf("NRFX_TWIM_EVT_DONE \n");
 			break;
 		case NRFX_TWIM_EVT_ADDRESS_NACK: 
 			nrf_i2c_transfer_err = true;
-			//printf("NRFX_TWIM_EVT_ADDRESS_NACK \n");
 			break;
 		case NRFX_TWIM_EVT_DATA_NACK: 
 			nrf_i2c_transfer_err = true;
-			//printf("NRFX_TWIM_EVT_DATA_NACK \n");
 			break;
 		case NRFX_TWIM_EVT_OVERRUN: 
 			nrf_i2c_transfer_err = true;
-			//printf("NRFX_TWIM_EVT_OVERRUN \n");
 			break;
 		case NRFX_TWIM_EVT_BUS_ERROR: 
 			nrf_i2c_transfer_err = true;
-			//printf("NRFX_TWIM_EVT_BUS_ERROR \n");
 			break;
 		default:
-			//printf("EVNT HANDLER NONE OF THE ABOVE \n");
 			break;
 		}
 }
@@ -114,10 +107,9 @@ i2c_event_handler(nrfx_twim_evt_t const * p_event, void * p_context)
 static void 
 i2c_wait(void)
 {
-	while(nrf_i2c_transfer_done == false){
+	while(nrf_i2c_transfer_done == false) {
 		if (nrf_i2c_transfer_err == true)
 		{
-			// printf("I2C TRANSFER ERROR \n");
 			nrf_i2c_transfer_err = false;
 			break;
 		}
@@ -170,10 +162,11 @@ i2c_init(void)
 
 	err_code = nrfx_twim_init(&i2c_instance, &i2c_config, i2c_event_handler, NULL);
 
-	if (err_code == NRFX_SUCCESS)
-	{
-		nrfx_twim_enable(&i2c_instance);
+	if(err_code != NRFX_SUCCESS) {
+		return;
 	}
+
+	nrfx_twim_enable(&i2c_instance);
 }
 /*---------------------------------------------------------------------------*/
 #endif /* PLATFORM_HAS_I2C */
