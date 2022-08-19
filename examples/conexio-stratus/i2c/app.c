@@ -84,17 +84,11 @@ PROCESS_THREAD(hello_world_process, ev, data)
 
     i2c_read(LIS2DH_ADD, LIS2DH_REG_WAI, &id, 1);
 
-    etimer_set(&timer, CLOCK_SECOND/4);
-	/* Wait for the periodic timer to expire. */
-    PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&timer));
-
-
     if (id != LIS2DH_CHIP_ID) {
 		LOG_ERR("Invalid chip ID: %02x\n", id);
 	} else {
         LOG_INFO("chip ID: %02x\n", id);
     }
-
 
     gpio_hal_arch_write_pin(0, 3, 0);
 

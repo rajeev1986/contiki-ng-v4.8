@@ -68,7 +68,6 @@
 static nrfx_twim_t i2c_instance = NRFX_TWIM_INSTANCE(1);
 static nrfx_twim_config_t i2c_config =  NRFX_TWIM_DEFAULT_CONFIG(NRF_I2C1_SCL, NRF_I2C1_SDA);
 /*---------------------------------------------------------------------------*/
-volatile nrfx_twim_xfer_desc_t i2c_tx_desc;
 volatile bool nrf_i2c_transfer_done = false;
 volatile bool nrf_i2c_transfer_err = false;
 /*---------------------------------------------------------------------------*/
@@ -110,7 +109,7 @@ i2c_wait(void)
 }
 /*---------------------------------------------------------------------------*/
 void 
-i2c_write(uint8_t slave_addr, uint8_t reg_addr,uint8_t *wdata, uint8_t wlen)
+i2c_write(uint8_t slave_addr, uint8_t reg_addr, uint8_t *wdata, uint8_t wlen)
 {
 	nrfx_err_t err_code;
 	uint8_t buffer[wlen + 1];
