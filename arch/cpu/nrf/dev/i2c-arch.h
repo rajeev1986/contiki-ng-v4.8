@@ -49,33 +49,33 @@
 #define I2C_ARCH_H
 /*---------------------------------------------------------------------------*/
 #include "contiki.h"
+#include "nrfx_twim.h"
 /*---------------------------------------------------------------------------*/
 /**
- * \brief One-time initialisation of the nRF I2C Driver
+ * \brief             One-time initialisation of the nRF I2C Driver
+ * \retval nrfx_err_t nrfx_error_codes
  *
  * This function must be called before any other I2C driver calls.
  */
-void i2c_init(void);
+nrfx_err_t i2c_init(void);
 /*---------------------------------------------------------------------------*/
 /**
  * \brief             Perform a write-only I2C transaction.
  * \param  slave_addr The address of the slave device on the I2C bus
  * \param  wdata      Write data during the I2C transaction.
  * \param  wlen       Length of data to be written
- * \retval true       The I2C operation was successful
- * \retval false      The I2C operation failed
+ * \retval nrfx_err_t nrfx_error_codes
  */
-void i2c_write(uint8_t slave_addr, uint8_t reg_addr, uint8_t *wdata, uint8_t wlen);
+nrfx_err_t i2c_write(uint8_t slave_addr, uint8_t reg_addr, uint8_t *wdata, uint8_t wlen);
 /*---------------------------------------------------------------------------*/
 /**
  * \brief             Perform a read-only I2C transaction.
  * \param  slave_addr The address of the slave device on the I2C bus
  * \param  rdata      Read data during the I2C transaction.
  * \param  rlen       Length of data to be read
- * \retval true       The I2C operation was successful
- * \retval false      The I2C operation failed
+ * \retval nrfx_err_t nrfx_error_codes
  */
-void i2c_read(uint8_t slave_addr, uint8_t reg_add, uint8_t *rdata, uint8_t rlen);
+nrfx_err_t i2c_read(uint8_t slave_addr, uint8_t reg_add, uint8_t *rdata, uint8_t rlen);
 /*---------------------------------------------------------------------------*/
 #endif /* I2C_ARCH_H */
 /*---------------------------------------------------------------------------*/
