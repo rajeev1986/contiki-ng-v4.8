@@ -49,34 +49,31 @@
 #include "sys/log.h"
 #include <stdio.h> /* For printf() */
 /*---------------------------------------------------------------------------*/
-#define LOG_MODULE "Stratus"
+#define LOG_MODULE "app"
 #define LOG_LEVEL LOG_LEVEL_DBG
 /*---------------------------------------------------------------------------*/
-PROCESS(hello_world_process, "Hello world process");
-AUTOSTART_PROCESSES(&hello_world_process);
-
-#define SENSOR_POWER_PIN        11 /* ENABLE_3V3_SENSOR --> i2c sensors  */
-#define LIS2DH_ADD              0x18
+PROCESS(app_process, "app process");
+AUTOSTART_PROCESSES(&app_process);
+/*---------------------------------------------------------------------------*/
+#define SENSOR_POWER_PIN    11 /* ENABLE_3V3_SENSOR --> i2c sensors  */
+#define BLUE_LED_PIN        3
+#define LIS2DH_ADD          0x18
 #define LIS2DH_REG_WAI			0x0f
 #define LIS2DH_CHIP_ID			0x33
-
-uint8_t id;
 /*---------------------------------------------------------------------------*/
-PROCESS_THREAD(hello_world_process, ev, data)
+PROCESS_THREAD(app_process, ev, data)
 {
   static struct etimer timer;
+  uint8_t id;
 
   PROCESS_BEGIN();
 
   LOG_INFO("testing I2C\n");
 
+  /* Turn on the power to the sensors */
   gpio_hal_arch_write_pin(0, SENSOR_POWER_PIN, 0);
-  etimer_set(&timer, CLOCK_SECOND);
-	/* Wait for the periodic timer to expire. */
-  PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&timer));
 
   while(1) {
-
     /* Setup a periodic timer that expires after 2 seconds. */
     etimer_set(&timer, CLOCK_SECOND * 2);
     /* Wait for the periodic timer to expire. */
@@ -86,18 +83,18 @@ PROCESS_THREAD(hello_world_process, ev, data)
 
     if (id != LIS2DH_CHIP_ID) {
 		LOG_ERR("Invalid chip ID: %02x\n", id);
-	} else {
-        LOG_INFO("chip ID: %02x\n", id);
+    } else {
+      LOG_INFO("chip ID: %02x\n", id);
     }
 
-    gpio_hal_arch_write_pin(0, 3, 0);
+    gpio_hal_arch_write_pin(0, BLUE_LED_PIN, 0);
 
     /* Setup a periodic timer that expires after a second. */
     etimer_set(&timer, CLOCK_SECOND);
-	/* Wait for the periodic timer to expire. */
+    /* Wait for the periodic timer to expire. */
     PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&timer));
 
-    gpio_hal_arch_write_pin(0, 3, 1);
+    gpio_hal_arch_write_pin(0, BLUE_LED_PIN, 1);
     
   }
 
