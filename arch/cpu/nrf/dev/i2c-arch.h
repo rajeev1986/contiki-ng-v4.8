@@ -66,7 +66,7 @@ nrfx_err_t i2c_init(void);
  * \param  wlen       Length of data to be written
  * \retval nrfx_err_t nrfx_error_codes
  */
-nrfx_err_t i2c_write(uint8_t slave_addr, uint8_t reg_addr, uint8_t *wdata, uint8_t wlen);
+nrfx_err_t i2c_write(uint8_t slave_addr, uint8_t *wdata, uint8_t wlen);
 /*---------------------------------------------------------------------------*/
 /**
  * \brief             Perform a read-only I2C transaction.
@@ -75,7 +75,27 @@ nrfx_err_t i2c_write(uint8_t slave_addr, uint8_t reg_addr, uint8_t *wdata, uint8
  * \param  rlen       Length of data to be read
  * \retval nrfx_err_t nrfx_error_codes
  */
-nrfx_err_t i2c_read(uint8_t slave_addr, uint8_t reg_add, uint8_t *rdata, uint8_t rlen);
+nrfx_err_t i2c_read(uint8_t slave_addr, uint8_t *rdata, uint8_t rlen);
+/*---------------------------------------------------------------------------*/
+/**
+ * \brief             Write data to a specific register address
+ * \param  slave_addr The address of the slave device on the I2C bus
+ * \param  reg_addr   The address of the register to write to
+ * \param  wdata      Write data during the I2C transaction.
+ * \param  wlen       Length of data to be written
+ * \retval nrfx_err_t nrfx_error_codes
+ */
+nrfx_err_t i2c_write_reg(uint8_t slave_addr, uint8_t reg_addr, uint8_t *wdata, uint8_t wlen);
+/*---------------------------------------------------------------------------*/
+/**
+ * \brief             Read data from a specific register address
+ * \param  slave_addr The address of the slave device on the I2C bus
+ * \param  reg_addr   The address of the register to read from
+ * \param  rdata      Read data during the I2C transaction.
+ * \param  rlen       Length of data to be read
+ * \retval nrfx_err_t nrfx_error_codes
+ */
+nrfx_err_t i2c_read_reg(uint8_t slave_addr, uint8_t reg_add, uint8_t *rdata, uint8_t rlen);
 /*---------------------------------------------------------------------------*/
 #endif /* I2C_ARCH_H */
 /*---------------------------------------------------------------------------*/

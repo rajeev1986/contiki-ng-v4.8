@@ -79,7 +79,7 @@ PROCESS_THREAD(app_process, ev, data)
     /* Wait for the periodic timer to expire. */
     PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&timer));
 
-    i2c_read(LIS2DH_ADD, LIS2DH_REG_WAI, &id, 1);
+    i2c_read_reg(LIS2DH_ADD, LIS2DH_REG_WAI, &id, 1);
 
     if (id != LIS2DH_CHIP_ID) {
 		LOG_ERR("Invalid chip ID: %02x\n", id);
