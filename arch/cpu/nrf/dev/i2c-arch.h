@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2020 Yago Fontoura do Rosario <yago.rosario@hotmail.com.br>
- * Copyright (C) 2022 Rajeev Piyare <rajeev@conexiotech.com>
+ * Copyright (C)2022 Rajeev Piyare <rajeev@conexiotech.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,82 +29,58 @@
  */
 /*---------------------------------------------------------------------------*/
 /**
- * \addtogroup nrf-platforms
+ * \addtogroup nrf
+ * @{
+ *
+ * \addtogroup nrf-dev Device drivers
+ * @{
+ *
+ * \addtogroup nrf-twim I2C driver
  * @{
  *
  * \file
- *      Platform implementation for nRF
+ *         I2C header file for the nRF.
  * \author
- *      Yago Fontoura do Rosario <yago.rosario@hotmail.com.br>
- *      Rajeev Piyare <rajeev@conexiotech.com>
+ *         Rajeev Piyare <rajeev@conexiotech.com>
+ *
  */
 /*---------------------------------------------------------------------------*/
+#ifndef I2C_ARCH_H
+#define I2C_ARCH_H
+/*---------------------------------------------------------------------------*/
 #include "contiki.h"
-
-#include "dev/gpio-hal.h"
-#include "dev/button-hal.h"
-#include "dev/leds.h"
-#include "dev/serial-line.h"
-
-#include "random.h"
-#include "int-master.h"
-#include "sensors.h"
-#include "uarte-arch.h"
-#include "i2c-arch.h"
-#include "linkaddr-arch.h"
-#include "reset-arch.h"
-
-#include "lpm.h"
-/*---------------------------------------------------------------------------*/
-/* Log configuration */
-#include "sys/log.h"
-#define LOG_MODULE "NRF"
-#define LOG_LEVEL LOG_LEVEL_MAIN
-/*---------------------------------------------------------------------------*/
-void
-platform_init_stage_one(void)
-{
-  gpio_hal_init();
-  leds_init();
-}
-/*---------------------------------------------------------------------------*/
-void
-platform_init_stage_two(void)
-{
-  button_hal_init();
-
-  /* Seed value is ignored since hardware RNG is used. */
-  random_init(0x5678);
-
-#if PLATFORM_HAS_UARTE
-  uarte_init();
-  serial_line_init();
-#if BUILD_WITH_SHELL
-  uarte_set_input(serial_line_input_byte);
-#endif /* BUILD_WITH_SHELL */
-#endif /* PLATFORM_HAS_UARTE */
-
-#if PLATFORM_HAS_I2C
-  i2c_init();
-#endif
-
-  populate_link_address();
-
-  reset_debug();
-}
-/*---------------------------------------------------------------------------*/
-void
-platform_init_stage_three(void)
-{
-  process_start(&sensors_process, NULL);
-}
-/*---------------------------------------------------------------------------*/
-void
-platform_idle()
-{
-  lpm_drop();
-}
+#include "nrfx_twim.h"
 /*---------------------------------------------------------------------------*/
 /**
+ * \brief             One-time initialisation of the nRF I2C Driver
+ * \retval nrfx_err_t nrfx_error_codes
+ *
+ * This function must be called before any other I2C driver calls.
+ */
+nrfx_err_t i2c_init(void);
+/*---------------------------------------------------------------------------*/
+/**
+ * \brief             Perform a write-only I2C transaction.
+ * \param  slave_addr The address of the slave device on the I2C bus
+ * \param  wdata      Write data during the I2C transaction.
+ * \param  wlen       Length of data to be written
+ * \retval nrfx_err_t nrfx_error_codes
+ */
+nrfx_err_t i2c_write(uint8_t slave_addr, uint8_t reg_addr, uint8_t *wdata, uint8_t wlen);
+/*---------------------------------------------------------------------------*/
+/**
+ * \brief             Perform a read-only I2C transaction.
+ * \param  slave_addr The address of the slave device on the I2C bus
+ * \param  rdata      Read data during the I2C transaction.
+ * \param  rlen       Length of data to be read
+ * \retval nrfx_err_t nrfx_error_codes
+ */
+nrfx_err_t i2c_read(uint8_t slave_addr, uint8_t reg_add, uint8_t *rdata, uint8_t rlen);
+/*---------------------------------------------------------------------------*/
+#endif /* I2C_ARCH_H */
+/*---------------------------------------------------------------------------*/
+/**
+ * @}
+ * @}
  * @}
  */

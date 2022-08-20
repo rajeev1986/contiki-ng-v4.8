@@ -42,53 +42,60 @@
 #include <sys/clock.h>
 #include "sys/etimer.h"
 #include "dev/leds.h"
+
+#include "i2c-arch.h"
+#include "gpio-hal-arch.h"
+
 #include "sys/log.h"
 #include <stdio.h> /* For printf() */
 /*---------------------------------------------------------------------------*/
-#define LOG_MODULE "Stratus"
+#define LOG_MODULE "app"
 #define LOG_LEVEL LOG_LEVEL_DBG
 /*---------------------------------------------------------------------------*/
-/* 1 if STRATUS_SHIELD_CONNECTED else 0 */
-#define STRATUS_SHIELD_CONNECTED    0
+PROCESS(app_process, "app process");
+AUTOSTART_PROCESSES(&app_process);
 /*---------------------------------------------------------------------------*/
-PROCESS(hello_world_process, "Hello world process");
-AUTOSTART_PROCESSES(&hello_world_process);
+#define SENSOR_POWER_PIN    11 /* ENABLE_3V3_SENSOR --> i2c sensors  */
+#define BLUE_LED_PIN        3
+#define LIS2DH_ADD          0x18
+#define LIS2DH_REG_WAI			0x0f
+#define LIS2DH_CHIP_ID			0x33
 /*---------------------------------------------------------------------------*/
-PROCESS_THREAD(hello_world_process, ev, data)
+PROCESS_THREAD(app_process, ev, data)
 {
   static struct etimer timer;
+  uint8_t id;
 
   PROCESS_BEGIN();
 
-  while(1) {
-    LOG_INFO("Hello from Conexio Stratus\n");
+  LOG_INFO("testing I2C\n");
 
+  /* Turn on the power to the sensors */
+  gpio_hal_arch_write_pin(0, SENSOR_POWER_PIN, 0);
+
+  while(1) {
     /* Setup a periodic timer that expires after 2 seconds. */
     etimer_set(&timer, CLOCK_SECOND * 2);
-
     /* Wait for the periodic timer to expire. */
     PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&timer));
-    
-	/* Turn ON BLUE LED on Stratus DK. */
-    leds_on(LEDS_BLUE);
 
-#if STRATUS_SHIELD_CONNECTED
-	/* Turn ON Orange LED on Stratus Shield. */
-    leds_on(LEDS_ORANGE);
-#endif
-    
-	/* Setup a periodic timer that expires after a second. */
+    i2c_read(LIS2DH_ADD, LIS2DH_REG_WAI, &id, 1);
+
+    if (id != LIS2DH_CHIP_ID) {
+		LOG_ERR("Invalid chip ID: %02x\n", id);
+    } else {
+      LOG_INFO("chip ID: %02x\n", id);
+    }
+
+    gpio_hal_arch_write_pin(0, BLUE_LED_PIN, 0);
+
+    /* Setup a periodic timer that expires after a second. */
     etimer_set(&timer, CLOCK_SECOND);
-	/* Wait for the periodic timer to expire. */
+    /* Wait for the periodic timer to expire. */
     PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&timer));
-    
-	/* Turn OFF BLUE LED on Stratus DK. */
-    leds_off(LEDS_BLUE);
 
-#if STRATUS_SHIELD_CONNECTED
-	/* Turn OFF Orange LED on Stratus Shield. */
-    leds_off(LEDS_ORANGE);
-#endif
+    gpio_hal_arch_write_pin(0, BLUE_LED_PIN, 1);
+    
   }
 
   PROCESS_END();

@@ -47,6 +47,7 @@
 #define PLATFORM_HAS_UARTE              1
 #define PLATFORM_HAS_BUTTON             1
 #define PLATFORM_SUPPORTS_BUTTON_HAL    1
+#define PLATFORM_HAS_I2C                1
 /*---------------------------------------------------------------------------*/
 #define STRATUS_BUTTON1_PIN     12
 #define STRATUS_BUTTON1_PORT    0
@@ -75,6 +76,11 @@
 #define NRF_UARTE0_TX_PORT  0
 #define NRF_UARTE0_RX_PIN   5
 #define NRF_UARTE0_RX_PORT  0
+/*---------------------------------------------------------------------------*/
+#define NRF_I2C1_SDA_PIN    26
+#define NRF_I2C1_SDA_PORT   0
+#define NRF_I2C1_SCL_PIN    27
+#define NRF_I2C1_SCL_PORT   0
 /*---------------------------------------------------------------------------*/
 #endif /* CONEXIO_STRATUS_PDK_CONF_H */
 /*---------------------------------------------------------------------------*/
