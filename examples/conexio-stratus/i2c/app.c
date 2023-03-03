@@ -58,8 +58,8 @@ AUTOSTART_PROCESSES(&app_process);
 #define SENSOR_POWER_PIN    11 /* ENABLE_3V3_SENSOR --> i2c sensors  */
 #define BLUE_LED_PIN        3
 #define LIS2DH_ADD          0x18
-#define LIS2DH_REG_WAI			0x0f
-#define LIS2DH_CHIP_ID			0x33
+#define LIS2DH_REG_WAI	    0x0f
+#define LIS2DH_CHIP_ID	    0x33
 /*---------------------------------------------------------------------------*/
 PROCESS_THREAD(app_process, ev, data)
 {
