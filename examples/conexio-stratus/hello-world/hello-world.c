@@ -69,24 +69,24 @@ PROCESS_THREAD(hello_world_process, ev, data)
     /* Wait for the periodic timer to expire. */
     PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&timer));
     
-	/* Turn ON BLUE LED on Stratus DK. */
+    /* Turn ON BLUE LED on Stratus DK. */
     leds_on(LEDS_BLUE);
 
 #if STRATUS_SHIELD_CONNECTED
-	/* Turn ON Orange LED on Stratus Shield. */
+    /* Turn ON Orange LED on Stratus Shield. */
     leds_on(LEDS_ORANGE);
 #endif
     
-	/* Setup a periodic timer that expires after a second. */
+    /* Setup a periodic timer that expires after a second. */
     etimer_set(&timer, CLOCK_SECOND);
-	/* Wait for the periodic timer to expire. */
+    /* Wait for the periodic timer to expire. */
     PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&timer));
     
-	/* Turn OFF BLUE LED on Stratus DK. */
+    /* Turn OFF BLUE LED on Stratus DK. */
     leds_off(LEDS_BLUE);
 
 #if STRATUS_SHIELD_CONNECTED
-	/* Turn OFF Orange LED on Stratus Shield. */
+    /* Turn OFF Orange LED on Stratus Shield. */
     leds_off(LEDS_ORANGE);
 #endif
   }
